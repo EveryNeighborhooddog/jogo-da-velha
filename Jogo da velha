@@ -1,0 +1,84 @@
+#include <iostream>
+
+using namespace std;
+
+void ImprimirTabuleiro(char tabuleiro[3][3]);
+
+int main()
+{
+    bool podejogar,vitoria,velha;
+    int jogador,coordenada[2];
+    char tabuleiro[3][3];
+
+    podejogar=true;
+    vitoria=false;
+    velha=false;
+    jogador=1;
+
+    //inicia o tabuleiro com valor 0
+    for(int i=0;i<3;i++){
+        for(int j=0;j<3;j++){
+            tabuleiro[i][j]='0';
+            cout<<tabuleiro[i][j]<< " ";
+        }
+        cout<<endl;
+    }
+
+    while(vitoria==false&&velha==false){
+    cout<< "coordenada (de 0 a 2): ";//insere coordenada
+    cin>>coordenada[0]>>coordenada[1];
+
+    if((coordenada[0]>2)||(coordenada[0]<0)|| //checa se o local da coordenada é valido
+       (coordenada[1]>2)||(coordenada[1]<0)){
+        podejogar=false;
+        cout<<"Jogada invalida\n\n";
+       }
+
+    if(tabuleiro[coordenada[0]][coordenada[1]]=='X'|| //checa se o local da coordenada já está ocupado
+    tabuleiro[coordenada[0]][coordenada[1]]=='O'){
+
+    podejogar=false;
+    cout<< "Jogada invalida.\n\n";
+    }
+
+    if(podejogar==true &&jogador==1){
+     tabuleiro[coordenada[0]][coordenada[1]]='X';
+     jogador=2; //muda a vez
+    }
+    else if (podejogar==true &&jogador==2){
+    tabuleiro[coordenada[0]][coordenada[1]]='O';
+    jogador=1;//muda a vez
+    }
+    podejogar=true;
+
+    //desenha o novo tabuleiro
+    ImprimirTabuleiro(tabuleiro);
+
+    if(tabuleiro[0][0]==tabuleiro[0][1]&&tabuleiro[0][0]==tabuleiro[0][2]&&tabuleiro[0][0]!='0'||
+       tabuleiro[0][0]==tabuleiro[1][0]&&tabuleiro[0][0]==tabuleiro[2][0]&&tabuleiro[0][0]!='0'||
+       tabuleiro[0][0]==tabuleiro[1][1]&&tabuleiro[0][0]==tabuleiro[2][2]&&tabuleiro[0][0]!='0'||
+       tabuleiro[0][2]==tabuleiro[1][1]&&tabuleiro[0][2]==tabuleiro[2][0]&&tabuleiro[0][2]!='0'||
+       tabuleiro[0][1]==tabuleiro[1][1]&&tabuleiro[0][1]==tabuleiro[2][1]&&tabuleiro[0][1]!='0'||
+       tabuleiro[0][2]==tabuleiro[1][2]&&tabuleiro[0][2]==tabuleiro[2][2]&&tabuleiro[0][2]!='0'||
+       tabuleiro[1][0]==tabuleiro[1][1]&&tabuleiro[1][0]==tabuleiro[1][2]&&tabuleiro[1][0]!='0'||
+       tabuleiro[2][0]==tabuleiro[2][1]&&tabuleiro[2][0]==tabuleiro[2][2]&&tabuleiro[2][0]!='0'){
+       vitoria=true;}
+    if (tabuleiro[0][0]!='0'&&tabuleiro[0][1]!='0'&&tabuleiro[0][2]!='0'&&
+        tabuleiro[1][0]!='0'&&tabuleiro[1][1]!='0'&&tabuleiro[1][2]!='0'&&
+        tabuleiro[2][0]!='0'&&tabuleiro[2][1]!='0'&&tabuleiro[2][2]!='0'){
+        velha=true;}
+    }
+    if(vitoria==true) cout<< "\nParabens, voce venceu!\n";
+    else if(velha==true) cout<< "\nQue pena, deu velha!\n";
+
+    return 0;
+}
+
+void ImprimirTabuleiro(char tabuleiro[3][3]){
+    for(int i=0;i<3;i++){
+        for(int j=0;j<3;j++){
+            cout<<tabuleiro[i][j]<< " ";
+        }
+        cout<<endl;
+    }
+}
